@@ -3,15 +3,15 @@
 require_once __DIR__ . '/app/database/db.php';
 require_once __DIR__ . '/app/layouts/head.php';
 
-$sql = "SELECT * FROM `students` WHERE YEAR(`date_of_birth`) = 1990 ORDER BY `surname` ASC;";
-
-// var_dump($sql);
+$sql = "SELECT `degrees`.`name` AS `degree_name`, `courses`.`name` AS `course_name`, `teachers`.`name`, `teachers`.`surname` 
+FROM `degrees`
+JOIN `courses` ON `courses`.`degree_id`=`degrees`.`id`
+JOIN `course_teacher` ON `course_teacher`.`course_id`=`courses`.`id`
+JOIN `teachers` ON `course_teacher`.`teacher_id`= `teachers`.`id`";
 
 $result = $connection->query($sql);
 
-
 ?>
-
 
 <body class="bg-light">
     <header>
@@ -29,22 +29,22 @@ $result = $connection->query($sql);
             <table class="table">
                 <thead>
                     <tr class="border border-primary">
-                        <th scope="col">ID</th>
+                        <th scope="col">Degree</th>
+                        <th scope="col">Course</th>
                         <th scope="col">Name</th>
                         <th scope="col">Surname</th>
-                        <th scope="col">Date of Birth</th>
                     </tr>
                 </thead>
                 <tbody>
 
                     <?php while ($row = $result->fetch_assoc()) :
-                        ['id' => $id, 'name' => $name, 'surname' => $surname, 'date_of_birth' => $date_of_birth] = $row; ?>
+                        ['degree_name' => $degree_name, 'course_name' => $course_name, 'name' => $name, 'surname' => $surname] = $row; ?>
 
                         <tr>
-                            <th scope="row"><?= $id ?></th>
+                            <th scope="row"><?= $degree_name ?></th>
+                            <td><?= $course_name ?></td>
                             <td><?= $name ?></td>
                             <td><?= $surname ?></td>
-                            <td><?= $date_of_birth ?></td>
                         </tr>
 
                     <?php endwhile; ?>

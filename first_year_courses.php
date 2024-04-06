@@ -3,14 +3,12 @@
 require_once __DIR__ . '/app/database/db.php';
 require_once __DIR__ . '/app/layouts/head.php';
 
-$sql = "SELECT * FROM `students` WHERE YEAR(`date_of_birth`) = 1990 ORDER BY `surname` ASC;";
-
-// var_dump($sql);
+$sql = "SELECT * FROM `courses` WHERE `period` = 'I semestre' AND `year`= 1 ORDER BY `cfu` DESC;";
 
 $result = $connection->query($sql);
 
-
 ?>
+
 
 
 <body class="bg-light">
@@ -29,22 +27,22 @@ $result = $connection->query($sql);
             <table class="table">
                 <thead>
                     <tr class="border border-primary">
-                        <th scope="col">ID</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Surname</th>
-                        <th scope="col">Date of Birth</th>
+                        <th scope="col">Period</th>
+                        <th scope="col">Year</th>
+                        <th scope="col">CFU</th>
                     </tr>
                 </thead>
                 <tbody>
 
                     <?php while ($row = $result->fetch_assoc()) :
-                        ['id' => $id, 'name' => $name, 'surname' => $surname, 'date_of_birth' => $date_of_birth] = $row; ?>
+                        ['name' => $name, 'period' => $period, 'year' => $year, 'cfu' => $cfu] = $row; ?>
 
                         <tr>
-                            <th scope="row"><?= $id ?></th>
-                            <td><?= $name ?></td>
-                            <td><?= $surname ?></td>
-                            <td><?= $date_of_birth ?></td>
+                            <th scope="row"><?= $name ?></th>
+                            <td><?= $period ?></td>
+                            <td><?= $year ?></td>
+                            <td><?= $cfu ?></td>
                         </tr>
 
                     <?php endwhile; ?>

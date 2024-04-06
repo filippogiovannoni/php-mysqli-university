@@ -4,20 +4,17 @@ require_once __DIR__ . '/app/database/db.php';
 require_once __DIR__ . '/app/layouts/head.php';
 require_once __DIR__ . '/app/layouts/header.php';
 
+$sql = "SELECT * FROM `students` WHERE YEAR(`date_of_birth`) = 1990 ORDER BY `surname` ASC;";
 
-if (!isset($_POST['year'])) {
-    $sql = "SELECT * FROM `students` ORDER BY `surname` ASC";
-    $result = $connection->query($sql);
-} else {
-    $year = $_POST['year'];
-    $sql = "SELECT * FROM `students` WHERE YEAR(`date_of_birth`) = $year ORDER BY `surname` ASC";
-    $result = $connection->query($sql);
-}
+// var_dump($sql);
+
+$result = $connection->query($sql);
 
 ?>
 
 <main>
     <div class="container">
+
         <table class="table">
             <thead>
                 <tr class="border border-primary">
@@ -45,3 +42,8 @@ if (!isset($_POST['year'])) {
         </table>
     </div>
 </main>
+
+
+</body>
+
+</html>
